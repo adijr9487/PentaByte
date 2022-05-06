@@ -1,0 +1,29 @@
+{
+  "name": "pentabyte",
+  "version": "1.0.0",
+  "description": "Hackfest contest",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "export NODE_ENV=production || set NODE_ENV=production && node server.js",
+    "dev": "export NODE_ENV=development || set NODE_ENV=development && nodemon server.js",
+    "build": "cd admin-client && npm install && npm run build && cd.. && cd customer-client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adijr9487/PentaByte.git"
+  },
+  "author": "Aditya | Sarthak | Divyansh | Yuvaan | Prateek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adijr9487/PentaByte/issues"
+  },
+  "homepage": "https://github.com/adijr9487/PentaByte#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2",
+    "path": "^0.12.7"
+  }
+}
