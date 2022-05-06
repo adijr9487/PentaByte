@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "export NODE_ENV=production || set NODE_ENV=production && node server.js",
     "dev": "export NODE_ENV=development || set NODE_ENV=development && nodemon server.js",
-    "build": "cd admin-client && npm install && npm run build && cd.. && cd customer-client && npm install && npm run build"
+    "build": "cd admin-client && npm install && npm run build && cd ../customer-client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
