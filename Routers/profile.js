@@ -6,7 +6,7 @@ const User = require("../Models/User");
 // Fetch user profile
 router.post("/fetch", authController.isAuthenticated, (req, res) => {
     try {
-        res.json({
+        res.status(200).json({
             user: req.user,
         });
     } catch (e) {
@@ -20,8 +20,11 @@ router.patch("/", authController.isAuthenticated, async (req, res) => {
         const user = await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name || req.user.name,
             avatar: req.body.avatar || req.user.avatar,
+            location: req.body.location
+                ? { type: "Point", coordinates: req.body.location }
+                : req.user.location,
         });
-        res.json({ user });
+        res.status(200).json({ user });
     } catch (e) {
         errorHander.handleInternalServer(res);
     }

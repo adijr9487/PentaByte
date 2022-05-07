@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 // Routers
 const home = require("./Routers/home");
 const auth = require("./Routers/auth");
+const complaint = require("./Routers/complaint");
 const profile = require("./Routers/profile");
 
 // PORT
@@ -25,22 +26,23 @@ app.use(express.static(path.resolve(__dirname, "./admin-client/build")));
 // Routes
 app.use("/home", home);
 app.use("/profile", profile);
+app.use("/complaint", complaint);
 app.use("/auth", auth);
 
 if (process.env.NODE_ENV === "production") {
-  app.get("/admin", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "admin-client", "build", "index.html")
-    );
-  });
-  app.get("/", (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "customer-client", "build", "index.html")
-    );
-  });
+    app.get("/admin", (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, "admin-client", "build", "index.html")
+        );
+    });
+    app.get("/", (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, "customer-client", "build", "index.html")
+        );
+    });
 }
 
 // Listen
 app.listen(PORT, () => {
-  console.log("Server is up and running!");
+    console.log("Server is up and running!");
 });

@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
     },
+    location: {
+        type: GeoSchema,
+    },
 });
 
 const User = mongoose.model("User", UserSchema);
