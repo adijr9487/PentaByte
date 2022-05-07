@@ -6,6 +6,9 @@ const Complaint = require("../Models/Complaint");
 // Get all complaints for a user
 router.post("/user/fetch", authController.isAuthenticated, async (req, res) => {
     try {
+        if (!req.body._id)
+            return errorHandler.handleBadRequest(res, "Invalid data");
+
         const complaints = await Complaint.find({
             user: req.user._id,
         });
@@ -21,7 +24,9 @@ router.post(
     authController.isAuthenticatedAdmin,
     async (req, res) => {
         try {
-            const complaints = await Complaint.find().populate({
+            const complaints = await Complaint.find({
+                zip: req.user.zip,
+            }).populate({
                 path: "user",
                 select: "-password",
             });
@@ -35,11 +40,21 @@ router.post(
 // Post complaint for user
 router.post("/user", authController.isAuthenticated, async (req, res) => {
     try {
+        if (
+            !req.body.zip ||
+            !req.body.title ||
+            !req.body.description ||
+            !req.body.location ||
+            !req.body._id
+        )
+            return errorHandler.handleBadRequest(res, "Invalid data");
+
         const complaint = new Complaint({
             user: req.user._id,
             title: req.body.title,
             description: req.body.description,
             location: { type: "Point", coordinates: req.body.location },
+            zip: req.body.zip,
         });
         let error = complaint.validateSync();
         console.log(error);
@@ -53,6 +68,9 @@ router.post("/user", authController.isAuthenticated, async (req, res) => {
 // Update status for admin
 router.post("/admin", authController.isAuthenticatedAdmin, async (req, res) => {
     try {
+        if (!req.body.status || !req.body._id)
+            return errorHandler.handleBadRequest(res, "Invalid data");
+
         const complaint = await Complaint.findByIdAndUpdate(req.body._id, {
             status: req.body.status,
         });
