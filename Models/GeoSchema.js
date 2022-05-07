@@ -7,8 +7,8 @@ const GeoSchema = new mongoose.Schema({
     },
     coordinates: {
         type: [Number],
-        index: "2dsphere"
-    }
+        index: "2dsphere",
+    },
 });
 
 module.exports = GeoSchema;

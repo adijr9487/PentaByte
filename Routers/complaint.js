@@ -9,7 +9,7 @@ router.post("/user/fetch", authController.isAuthenticated, async (req, res) => {
         const complaints = await Complaint.find({
             user: req.user._id,
         });
-        res.json({ complaints });
+        res.status(200).json({ complaints });
     } catch (e) {
         errorHander.handleInternalServer(res);
     }
@@ -25,7 +25,7 @@ router.post(
                 path: "user",
                 select: "-password",
             });
-            res.json({ complaints });
+            res.status(200).json({ complaints });
         } catch (e) {
             errorHander.handleInternalServer(res);
         }
@@ -41,8 +41,10 @@ router.post("/user", authController.isAuthenticated, async (req, res) => {
             description: req.body.description,
             location: { type: "Point", coordinates: req.body.location },
         });
+        let error = complaint.validateSync();
+        console.log(error);
         await complaint.save();
-        res.json({ complaint });
+        res.status(200).json({ complaint });
     } catch (e) {
         errorHander.handleInternalServer(res);
     }
@@ -54,7 +56,7 @@ router.post("/admin", authController.isAuthenticatedAdmin, async (req, res) => {
         const complaint = await Complaint.findByIdAndUpdate(req.body._id, {
             status: req.body.status,
         });
-        res.json({ complaint });
+        res.status(200).json({ complaint });
     } catch (e) {
         errorHander.handleInternalServer(res);
     }

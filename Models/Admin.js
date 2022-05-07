@@ -4,15 +4,24 @@ const AdminSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
+    },
+    zip: {
+        type: Number,
+        validate: {
+            validator: function (val) {
+                return /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/.test(val);
+            },
+        },
+        required: true,
     },
     // verified: {
     //     type: Boolean,
