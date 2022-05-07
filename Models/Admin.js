@@ -24,6 +24,10 @@ const AdminSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    pickups: {
+        type: Number,
+        default: 1,
+    },
     // verified: {
     //     type: Boolean,
     //     default: false
