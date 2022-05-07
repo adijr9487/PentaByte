@@ -5,10 +5,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 // Routers
-const home = require("./Routers/home");
-const auth = require("./Routers/auth");
-const complaint = require("./Routers/complaint");
-const profile = require("./Routers/profile");
+const adminRoutes = require("./Routers/admin/admin");
+const userRoutes = require("./Routers/user/user");
 
 // PORT
 const PORT = process.env.PORT || 5000;
@@ -24,11 +22,10 @@ app.use(express.static(path.resolve(__dirname, "./customer-client/build")));
 app.use(express.static(path.resolve(__dirname, "./admin-client/build")));
 
 // Routes
-app.use("/home", home);
-app.use("/profile", profile);
-app.use("/complaint", complaint);
-app.use("/auth", auth);
+app.use("/user", userRoutes);
+app.use("/admin", adminRoutes);
 
+// Production Routes for Client
 if (process.env.NODE_ENV === "production") {
     app.get("/admin", (req, res) => {
         res.sendFile(

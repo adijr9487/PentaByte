@@ -20,6 +20,10 @@ const ComplaintSchema = new mongoose.Schema(
             type: GeoSchema,
             required: true,
         },
+        zip: {
+            type: Number,
+            required: true,
+        },
         status: {
             type: String,
             enum: ["Pending", "Alloted", "Completed"],

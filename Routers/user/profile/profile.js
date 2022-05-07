@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const authController = require("../Controller/AuthController");
-const errorHander = require("../handler/error");
-const User = require("../Models/User");
+const authController = require("../../../Controller/AuthController");
+const errorHander = require("../../../handler/error");
+const User = require("../../../Models/User");
 
 // Fetch user profile
 router.post("/fetch", authController.isAuthenticated, (req, res) => {
@@ -15,7 +15,7 @@ router.post("/fetch", authController.isAuthenticated, (req, res) => {
 });
 
 // Update user profile
-router.patch("/", authController.isAuthenticated, async (req, res) => {
+router.post("/update", authController.isAuthenticated, async (req, res) => {
     try {
         const user = await User.findByIdAndUpdate(req.user._id, {
             name: req.body.name || req.user.name,

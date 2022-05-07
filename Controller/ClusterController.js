@@ -1,21 +1,8 @@
 require("dotenv").config();
-const clustering = require('density-clustering');
-const KNN = require('ml-knn');
-
-const geoData = [
-    [12.120000, 76.680000],
-    [24.879999, 74.629997],
-    [16.994444, 73.300003],
-    [19.155001, 72.849998],
-    [24.794500, 73.055000],
-    [21.250000, 81.629997],
-    [22.794500, 103.055000],
-    [29.250000, 71.629997],
-    [2290.250000, 2710.629997]
-]
+const clustering = require("density-clustering");
+const KNN = require("ml-knn");
 
 // Create the data 2D-array (vectors) describing the data
-
 
 // zip
 // zip --> admin
@@ -50,7 +37,7 @@ function dbscan(locations) {
     } catch (e) {
         return new Error("Internal Server Error");
     }
-};
+}
 
 // Get Clusters with large sizes
 function getAbnormalClusters(clusters) {
@@ -58,48 +45,42 @@ function getAbnormalClusters(clusters) {
         const abnormal = [],
             normal = [];
         clusters.forEach((cluster) =>
-            cluster.length > threshold ? abnormal.push(cluster) : normal.push(cluster)
-
+            cluster.length > threshold
+                ? abnormal.push(cluster)
+                : normal.push(cluster)
         );
         return {
             abnormal,
-            normal
+            normal,
         };
     } catch (e) {
         return new Error("Internal Server Error");
     }
-};
+}
 
 //Get final cluster to user
 exports.handleClusters = function (coordinates) {
     // zip admin bin
 
     try {
-        let result = []
+        let result = [];
         let cluster_dbscan = dbscan(coordinates);
-        let {
-            abnormal,
-            normal
-        } = getAbnormalClusters(cluster_dbscan)
+        let { abnormal, normal } = getAbnormalClusters(cluster_dbscan);
         // const abnormal_cc = [];
         // const normal_cc = [];
 
         abnormal.forEach((ab_cluster) => {
             let temp = ab_cluster.map((ab_index) => {
-                return coordinates[ab_index]
-            })
+                return coordinates[ab_index];
+            });
             result = [...normal, ...kMeanCluster(temp)];
-        })
+        });
         result = result.map((idx_arr) =>
-            idx_arr.map((idx) =>
-                coordinates[idx]
-            )
+            idx_arr.map((idx) => coordinates[idx])
         );
         return result;
-    } catch (e) {
-
-    }
-}
+    } catch (e) {}
+};
 
 // Find the cluster to which the coordinates belong
 exports.findCluster = function (clusters, coordinates) {
@@ -114,15 +95,11 @@ exports.findCluster = function (clusters, coordinates) {
     const knn = new KNN(data, labels);
     const result = knn.predict([coordinates]);
     return result[0];
-}
+};
 
 // 26.249750736046146, 78.16466840385506
 // 26.249277535883223, 78.16717705139784
 // 26.250098761777817, 78.16510750206896
 // 26.249851481590614, 78.16526408083935
-
-
-
-
 
 // 0.00255288677541454738016347776912
