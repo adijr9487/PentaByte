@@ -1,7 +1,5 @@
-const router = require("express").Router;
+const router = require("express").Router();
 
-router.post('/home', (req, res) => {
+router.post("/", (req, res) => {});
 
-});
-
-module.exports = router
+module.exports = router;
