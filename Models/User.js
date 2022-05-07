@@ -5,20 +5,19 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     name: {
         type: String,
-        required: true
+        required: true,
     },
-    location: {
-        type: GeoSchema,
-        required: true
-    }
+    avatar: {
+        type: String,
+    },
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -1,28 +1,35 @@
 const mongoose = require("mongoose");
 const GeoSchema = require("./GeoSchema");
 
-const ComplaintSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+const ComplaintSchema = new mongoose.Schema(
+    {
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,
+        },
+        location: {
+            type: GeoSchema,
+            required: true,
+        },
+        status: {
+            type: String,
+            enum: ["Pending", "Alloted", "Completed"],
+            default: "Pending",
+        },
     },
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    status: {
-        type: String,
-        enum: ["Pending", "Alloted", "Completed"],
-        default: "Pending",
+    {
+        timestamps: true,
     }
-}, {
-    timestamps: true
-});
+);
 
 const Complaint = mongoose.model("Complaint", ComplaintSchema);
 
