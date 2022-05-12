@@ -6,6 +6,9 @@ const AdminSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    avatar: {
+        type: String.apply,
+    },
     password: {
         type: String,
         required: true,

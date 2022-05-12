@@ -14,6 +14,8 @@ web_modules/
 # Optional npm cache directory
 .npm
 
+# ENVS
+.env
 
 # Front
 customer-client/node_modules

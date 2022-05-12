@@ -24,6 +24,11 @@ const ComplaintSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
+        tag: {
+            type: String,
+            enum: ["Low", "Medium", "High", "Critical"],
+            default: "Low",
+        },
         status: {
             type: String,
             enum: ["Pending", "Alloted", "Completed"],

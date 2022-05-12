@@ -71,4 +71,16 @@ router.post(
     }
 );
 
+// Allocate Resources for admin
+router.post(
+    "/allocate",
+    authController.isAuthenticatedAdmin,
+    async (req, res) => {
+        try {
+        } catch (e) {
+            errorHandler.handleInternalServer(res);
+        }
+    }
+);
+
 module.exports = router;
