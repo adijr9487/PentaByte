@@ -36,6 +36,7 @@ router.post("/register", authController.isAuthenticated, async (req, res) => {
             description: req.body.description,
             location: { type: "Point", coordinates: req.body.location },
             zip: req.body.zip,
+            tag: req.body.tag,
         });
         let error = complaint.validateSync();
         console.log(error);

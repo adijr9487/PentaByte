@@ -20,7 +20,7 @@ router.post("/fetch", authController.isAuthenticatedAdmin, async (req, res) => {
 
 // Update status for admin
 router.post(
-    "/status",
+    "/status/update",
     authController.isAuthenticatedAdmin,
     async (req, res) => {
         try {
@@ -29,6 +29,25 @@ router.post(
 
             const complaint = await Complaint.findByIdAndUpdate(req.body._id, {
                 status: req.body.status,
+            });
+            res.status(200).json({ complaint });
+        } catch (e) {
+            errorHander.handleInternalServer(res);
+        }
+    }
+);
+
+// Update severity for admin
+router.post(
+    "/severity/update",
+    authController.isAuthenticatedAdmin,
+    async (req, res) => {
+        try {
+            if (!req.body.tag || !req.body._id)
+                return errorHander.handleBadRequest(res);
+
+            const complaint = await Complaint.findByIdAndUpdate(req.body._id, {
+                tag: req.body.tag,
             });
             res.status(200).json({ complaint });
         } catch (e) {
